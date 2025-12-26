@@ -97,8 +97,32 @@ function renderLista(data) {
   data.forEach((lugar, index) => {
     const li = document.createElement("li");
     li.textContent = lugar.lista;
+li.onclick = () => {
+  // 🧾 Muestra ficha arriba de la lista
+  infoBox.innerHTML = `
+    <strong>${l.lista}</strong><br>
+    <span>${l.ficha.nombre}</span><br>
+    <small>${l.ficha.domicilio}</small>
+  `;
+  infoBox.classList.remove("hidden");
 
-    li.onclick = () => {
+  // 🎯 Centra el punto en el mapa
+  map.flyTo([l.lat, l.lng], 16, {
+    animate: true,
+    duration: 0.8
+  });
+
+  // 🔔 Abre la ficha del marcador
+  l._marker.openPopup();
+
+  // 📱 En móvil baja al mapa automáticamente
+  if (window.innerWidth <= 768) {
+    document.getElementById("map").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+};
+
       // FICHA
       infoBox.innerHTML = `
         <h3>${lugar.nombre}</h3>
@@ -147,4 +171,10 @@ fetch('./data/poligono_ixtapaluca.json')
   })
   .catch(err => console.error('Error cargando poligono_ixtapaluca.geojson:', err));
 
+// 🔄 Corrección Leaflet móvil
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 300);
+});
 
