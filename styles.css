@@ -116,16 +116,38 @@ body {
 
 /* MÓVIL */
 @media (max-width: 768px) {
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+  }
+
   body {
-    flex-direction: column;
+    display: block; /* ❗️NO flex en móvil */
   }
 
   .panel {
     width: 100%;
     height: auto;
+    max-height: none;
   }
 
+  #lista {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* 🔥 CRÍTICO: Leaflet necesita altura REAL */
   #map {
-    height: 50vh;
+    width: 100%;
+    height: 60vh;
+    min-height: 320px;
+  }
+
+  #btn-centro {
+    top: auto;
+    bottom: 20px;
+    right: 20px;
   }
 }
