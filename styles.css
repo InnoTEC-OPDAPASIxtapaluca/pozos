@@ -9,6 +9,13 @@ html, body {
   height: 100%;
 }
 
+/* LAYOUT GENERAL */
+body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
 /* PANEL */
 .panel {
   width: 28%;
@@ -17,7 +24,6 @@ html, body {
   display: flex;
   flex-direction: column;
   border-right: 1px solid #ccc;
-  height: 100vh;
 }
 
 /* BUSCADOR */
@@ -31,7 +37,6 @@ html, body {
 
 #icon-search {
   width: 26px;
-  cursor: pointer;
   margin-right: 8px;
 }
 
@@ -41,12 +46,11 @@ html, body {
   display: none;
 }
 
-/* FICHA TÉCNICA */
+/* FICHA */
 .ficha {
   background: #ffffff;
   padding: 15px;
   border-bottom: 1px solid #ccc;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .ficha h3 {
@@ -58,10 +62,6 @@ html, body {
 .ficha .dato {
   font-size: 14px;
   margin-bottom: 6px;
-}
-
-.ficha .dato span {
-  font-weight: bold;
 }
 
 .hidden {
@@ -90,7 +90,7 @@ html, body {
 /* MAPA */
 #map {
   flex: 1;
-  height: 100vh;
+  height: 100%;
 }
 
 /* BOTÓN CENTRAR */
@@ -109,47 +109,26 @@ html, body {
   width: 22px;
 }
 
-/* LAYOUT PC */
-body {
-  display: flex;
-}
-
-/* MÓVIL */
+/* 📱 MÓVIL */
 @media (max-width: 768px) {
-
-  html, body {
-    height: 100%;
-    margin: 0;
-    overflow-y: auto;
-  }
-
   body {
-    display: block;
+    flex-direction: column;
+    overflow-y: auto;
   }
 
   .panel {
     width: 100%;
-    max-height: none;
+    height: 45vh;
   }
 
-  /* 📜 SCROLL SOLO EN LA LISTA */
   #lista {
-    max-height: 45vh;     /* altura visible */
-    overflow-y: auto;     /* scroll vertical */
+    max-height: 40vh;
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   #map {
-    width: 100%;
-    height: 60vh;
-    min-height: 320px;
-  }
-}
-
-  /* 🔥 CRÍTICO: Leaflet necesita altura REAL */
-  #map {
-    width: 100%;
-    height: 60vh;
+    height: 55vh;
     min-height: 320px;
   }
 
