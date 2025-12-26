@@ -124,19 +124,27 @@ body {
   }
 
   body {
-    display: block; /* ❗️NO flex en móvil */
+    display: block;
   }
 
   .panel {
     width: 100%;
-    height: auto;
     max-height: none;
   }
 
+  /* 📜 SCROLL SOLO EN LA LISTA */
   #lista {
-    max-height: none;
-    overflow-y: visible;
+    max-height: 45vh;     /* altura visible */
+    overflow-y: auto;     /* scroll vertical */
+    -webkit-overflow-scrolling: touch;
   }
+
+  #map {
+    width: 100%;
+    height: 60vh;
+    min-height: 320px;
+  }
+}
 
   /* 🔥 CRÍTICO: Leaflet necesita altura REAL */
   #map {
