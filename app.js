@@ -94,23 +94,49 @@ const infoBox = document.getElementById("info-box");
 function renderLista(data) {
   lista.innerHTML = "";
 
-  data.forEach((lugar, index) => {
-    const li = document.createElement("li");
-    li.textContent = lugar.lista;
-li.onclick = () => {
-  // 🧾 Muestra ficha arriba de la lista
-  infoBox.innerHTML = `
-    <strong>${l.lista}</strong><br>
-    <span>${l.ficha.nombre}</span><br>
-    <small>${l.ficha.domicilio}</small>
-  `;
-  infoBox.classList.remove("hidden");
+  // 📱 En móvil solo 5 elementos
+  const esMovil = window.innerWidth <= 768;
+  const dataMostrada = esMovil ? data.slice(0, 5) : data;
 
-  // 🎯 Centra el punto en el mapa
-  map.flyTo([l.lat, l.lng], 16, {
-    animate: true,
-    duration: 0.8
+  dataMostrada.forEach(l => {
+    const li = document.createElement("li");
+    li.textContent = l.lista;
+
+    li.onclick = () => {
+      infoBox.innerHTML = `
+        <h3>${l.nombre}</h3>
+        <div class="dato"><span>Gasto:</span> ${l.ficha.gasto}</div>
+        <div class="dato"><span>Estatus:</span> ${l.ficha.estatus}</div>
+        <div class="dato"><span>Estado:</span> ${l.ficha.estado}</div>
+        <div class="dato"><span>Domicilio:</span> ${l.ficha.domicilio}</div>
+      `;
+      infoBox.classList.remove("hidden");
+
+      map.flyTo([l.lat, l.lng], 16, { duration: 0.8 });
+      l._marker.openPopup();
+
+      // 📱 Scroll al mapa en móvil
+      if (window.innerWidth <= 768) {
+        document.getElementById("map").scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+    };
+
+    lista.appendChild(li);
   });
+
+  // 📱 Aviso informativo
+  if (esMovil && data.length > 5) {
+    const aviso = document.createElement("li");
+    aviso.textContent = "🔽 Usa el buscador para ver más puntos";
+    aviso.style.fontStyle = "italic";
+    aviso.style.color = "#666";
+    aviso.style.cursor = "default";
+    lista.appendChild(aviso);
+  }
+}
+;
 
   // 🔔 Abre la ficha del marcador
   l._marker.openPopup();
