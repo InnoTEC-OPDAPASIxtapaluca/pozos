@@ -1,0 +1,131 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+/* PANEL */
+.panel {
+  width: 28%;
+  min-width: 320px;
+  background: #f4f6f8;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #ccc;
+  height: 100vh;
+}
+
+/* BUSCADOR */
+#search-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+#icon-search {
+  width: 26px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+#search {
+  flex: 1;
+  padding: 6px;
+  display: none;
+}
+
+/* FICHA TÉCNICA */
+.ficha {
+  background: #ffffff;
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.ficha h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #1f3c88;
+}
+
+.ficha .dato {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.ficha .dato span {
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+/* LISTA */
+#lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+#lista li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+#lista li:hover {
+  background: #e6e6e6;
+}
+
+/* MAPA */
+#map {
+  flex: 1;
+  height: 100vh;
+}
+
+/* BOTÓN CENTRAR */
+#btn-centro {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: white;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#btn-centro img {
+  width: 22px;
+}
+
+/* LAYOUT PC */
+body {
+  display: flex;
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .panel {
+    width: 100%;
+    height: auto;
+  }
+
+  #map {
+    height: 50vh;
+  }
+}
