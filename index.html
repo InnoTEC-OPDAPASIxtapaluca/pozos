@@ -2,31 +2,29 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Mapa interactivo</title>
+  <title>Mapa Interactivo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Leaflet -->
+  <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-
   <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  <!-- PANEL LATERAL -->
   <aside class="panel">
-
     <!-- Buscador -->
     <div id="search-container">
-      <img id="icon-search" src="./imagenes/iconolupa.png">
+      <img id="icon-search" src="./imagenes/iconolupa.png" alt="Buscar">
       <input type="text" id="search" placeholder="Buscar lugar...">
     </div>
 
-    <!-- FICHA TÉCNICA -->
+    <!-- Ficha técnica -->
     <div id="info-box" class="ficha hidden"></div>
 
-    <!-- LISTA -->
+    <!-- Lista -->
     <ul id="lista"></ul>
-
   </aside>
 
   <!-- MAPA -->
@@ -34,12 +32,12 @@
 
   <!-- Botón centrar -->
   <button id="btn-centro">
-    <img src="./imagenes/iconocentrar.png">
+    <img src="./imagenes/iconocentrar.png" alt="Centrar">
   </button>
 
-  <!-- JS -->
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- JS del proyecto -->
   <script src="app.js"></script>
-
 </body>
 </html>
