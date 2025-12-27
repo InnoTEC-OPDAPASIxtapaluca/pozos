@@ -1,13 +1,7 @@
-// 📍 DATOS DE EJEMPLO
-const lugares = [
-  {nombre:"JORGE JIMÉNEZ CANTÚ",lat:19.317364,lng:-98.848323,lista:"POZO 1",ficha:{estatus:"ACTIVO",gasto:"38",estado:"BUENO",domicilio:"CALLE CAÑADA S/N"},popup:"POZO 1"},
-  {nombre:"SAN FRANCISCO",lat:19.338547,lng:-98.866603,lista:"POZO 2",ficha:{estatus:"ACTIVO",gasto:"21",estado:"Regular",domicilio:"CALLE SAN FRANCISCO"},popup:"POZO 2"},
-  {nombre:"SAN JOSÉ LA PALMA",lat:19.321736,lng:-98.881706,lista:"POZO 3",ficha:{estatus:"ACTIVO",gasto:"20",estado:"Regular",domicilio:"CARRIL 7 S/N"},popup:"POZO 3"},
-  {nombre:"NUEVO MÉXICO",lat:19.321361,lng:-98.8853,lista:"POZO 4",ficha:{estatus:"ACTIVO",gasto:"21",estado:"BUENO",domicilio:"CALLE NUEVO MEXICO"},popup:"POZO 4"},
-  {nombre:"ACUEDUCTO",lat:19.322508,lng:-98.889406,lista:"POZO 5",ficha:{estatus:"ACTIVO",gasto:"42",estado:"BUENO",domicilio:"CALLE ACUEDUCTO"},popup:"POZO 5"}
-];
+// DATOS (ya tus 52 lugares)
+const lugares = [ /* aquí van tus 52 objetos tal como los tienes */ ];
 
-// 🌍 MAPA
+// MAPA
 const map = L.map("map").setView([19.312, -98.885], 13);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -22,21 +16,23 @@ const iconopozos = L.icon({
   popupAnchor: [0, -40]
 });
 
-// MARCADORES
+// MARCADORES y guardarlos en cada objeto
 lugares.forEach(lugar => {
-  lugar._marker = L.marker([lugar.lat, lugar.lng], {icon: iconopozos})
+  const marker = L.marker([lugar.lat, lugar.lng], { icon: iconopozos })
     .addTo(map)
-    .bindPopup(`<strong>${lugar.popup}</strong><br>${lugar.nombre}`);
+    .bindPopup(`<strong>${lugar.lista}</strong><br>${lugar.nombre}`);
+  lugar._marker = marker;
 });
 
-// AJUSTAR VISTA INICIAL
+// AJUSTE INICIAL de vista
 const group = L.featureGroup(lugares.map(l => l._marker));
 map.fitBounds(group.getBounds());
 
-// LISTA
+// ELEMENTOS HTML
 const lista = document.getElementById("lista");
 const infoBox = document.getElementById("info-box");
 
+// RENDER LISTA
 function renderLista(data) {
   lista.innerHTML = "";
   const esMovil = window.innerWidth <= 768;
@@ -45,6 +41,7 @@ function renderLista(data) {
   dataMostrada.forEach(l => {
     const li = document.createElement("li");
     li.textContent = l.lista;
+
     li.onclick = () => {
       infoBox.innerHTML = `
         <h3>${l.nombre}</h3>
@@ -54,13 +51,15 @@ function renderLista(data) {
         <div class="dato"><span>Domicilio:</span> ${l.ficha.domicilio}</div>
       `;
       infoBox.classList.remove("hidden");
+
       map.flyTo([l.lat, l.lng], 16, { duration: 0.8 });
       l._marker.openPopup();
 
       if (esMovil) {
-        document.getElementById("map").scrollIntoView({behavior: "smooth"});
+        document.getElementById("map").scrollIntoView({ behavior: "smooth" });
       }
     };
+
     lista.appendChild(li);
   });
 
@@ -81,23 +80,19 @@ document.getElementById("btn-centro").onclick = () => {
   map.fitBounds(group.getBounds());
 };
 
-// POLÍGONO DE EJEMPLO (si no tienes JSON)
-const poligonoIxtapaluca = L.polygon([
-  [19.31, -98.87],
-  [19.32, -98.95],
-  [19.34, -98.94],
-  [19.33, -98.87]
-], {
-  color: '#9D2449',
-  weight: 3,
-  fillColor: '#9D2449',
-  fillOpacity: 0.18
-}).addTo(map);
+// POLÍGONO
+fetch('./data/poligono_ixtapaluca.json')
+  .then(res => res.json())
+  .then(geojson => {
+    const poligono = L.geoJSON(geojson, {
+      style: { color:'#9D2449', weight:3, fillColor:'#9D2449', fillOpacity:0.18 }
+    }).addTo(map);
+    poligono.bringToBack();
+    map.fitBounds(poligono.getBounds());
+  })
+  .catch(err => console.error('Error cargando poligono_ixtapaluca.geojson:', err));
 
-poligonoIxtapaluca.bringToBack();
-map.fitBounds(poligonoIxtapaluca.getBounds());
-
-// REVALIDACIÓN LEAFLET MÓVIL
+// LEAFLET MOBILE FIX
 window.addEventListener("load", () => {
-  setTimeout(() => map.invalidateSize(), 300);
+  setTimeout(() => { map.invalidateSize(); }, 300);
 });
