@@ -9,13 +9,6 @@ html, body {
   height: 100%;
 }
 
-/* LAYOUT GENERAL */
-body {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-}
-
 /* PANEL */
 .panel {
   width: 28%;
@@ -24,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   border-right: 1px solid #ccc;
+  height: 100vh;
 }
 
 /* BUSCADOR */
@@ -37,20 +31,21 @@ body {
 
 #icon-search {
   width: 26px;
+  cursor: pointer;
   margin-right: 8px;
 }
 
 #search {
   flex: 1;
   padding: 6px;
-  display: none;
 }
 
-/* FICHA */
+/* FICHA TÉCNICA */
 .ficha {
   background: #ffffff;
   padding: 15px;
   border-bottom: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 .ficha h3 {
@@ -62,6 +57,10 @@ body {
 .ficha .dato {
   font-size: 14px;
   margin-bottom: 6px;
+}
+
+.ficha .dato span {
+  font-weight: bold;
 }
 
 .hidden {
@@ -90,7 +89,8 @@ body {
 /* MAPA */
 #map {
   flex: 1;
-  height: 100%;
+  width: 100%;
+  height: 100vh;
 }
 
 /* BOTÓN CENTRAR */
@@ -109,26 +109,33 @@ body {
   width: 22px;
 }
 
-/* 📱 MÓVIL */
+/* LAYOUT PC */
+body {
+  display: flex;
+}
+
+/* MÓVIL */
 @media (max-width: 768px) {
+
   body {
-    flex-direction: column;
-    overflow-y: auto;
+    display: block;
   }
 
   .panel {
     width: 100%;
-    height: 45vh;
+    max-height: none;
   }
 
+  /* SCROLL SOLO EN LA LISTA */
   #lista {
-    max-height: 40vh;
+    max-height: 45vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
   #map {
-    height: 55vh;
+    width: 100%;
+    height: 60vh;
     min-height: 320px;
   }
 
