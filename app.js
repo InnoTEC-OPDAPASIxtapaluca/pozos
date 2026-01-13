@@ -56,6 +56,28 @@ const lugares = [
   {nombre:"3 ULTRA",lat:19.321583,lng:-98.943389,lista:"POZO 52",ficha:{estatus:"ACTIVO",gasto:"80",estado:"BUENO",domicilio:"SIN DATOS"},popup:"POZO 52"}
 ];
 
+Papa.parse("datos.csv", {
+  download: true,
+  header: true,
+  complete: function(results) {
+    results.data.forEach(row => {
+      const geom = parseWKT(row.WKT);
+      if (!geom) return;
+
+      if (geom.type === "POINT") {
+        L.marker(geom.coords)
+          .addTo(map)
+          .bindPopup(`<b>${row.Nombre}</b><br>${row.Descripción}`);
+      }
+
+      if (geom.type === "LINESTRING") {
+        L.polyline(geom.coords, { weight: 4 })
+          .addTo(map)
+          .bindPopup(`<b>${row.Nombre}</b>`);
+      }
+    });
+  }
+});
 
 
 // 🌍 MAPA
